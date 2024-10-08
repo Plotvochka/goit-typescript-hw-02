@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formField {
+  font-family: sans-serif;
+  letter-spacing: 1px;
+  font-size: 24px;
+  width: 300px;
+  padding: 5px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.searchIcon {
+  width: 40px;
+  height: 40px;
+  margin-top: 15px;
+  margin-right: 10px;
+}
