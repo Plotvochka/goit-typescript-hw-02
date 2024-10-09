@@ -6,6 +6,7 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 import { Image } from "../types";
+import css from "./App.module.css";
 
 export default function App() {
   const [images, setImages] = useState<Image[]>([]);
@@ -64,7 +65,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className={css.container}>
       <SearchBar onSubmit={handleSearchSubmit} />
       {error && <ErrorMessage message={error} />}
       <ImageGallery images={images} handleImageClick={openModal} />
