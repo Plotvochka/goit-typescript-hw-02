@@ -1,10 +1,7 @@
-import toast, { Toaster } from "react-hot-toast";
+type ErrorMessageProps = {
+  message: string;
+};
 
-export default function ErrorMessage() {
-  toast.error("There was a problem. Please try again.");
-  return (
-    <div>
-      <Toaster position="bottom-center" reverseOrder={false} />
-    </div>
-  );
+export default function ErrorMessage({ message }: ErrorMessageProps) {
+  return <p>{message}</p>;
 }

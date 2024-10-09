@@ -1,29 +1,36 @@
-import css from "./ImageModal.module.css";
 import Modal from "react-modal";
+import css from "./ImageModal.module.css";
+import React from "react";
+import { Image } from "../types";
 
-export default function ImageModal({ src, alt, isOpen, onClose }) {
-  function closeModal() {
-    onClose(false);
-  }
+Modal.setAppElement("#root");
 
+type ImageModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  image?: Image | null;
+};
+
+const ImageModal = ({ isOpen, onClose, image }: ImageModalProps) => {
   return (
     <Modal
-      aria={{ labelledby: "photo", describedby: alt }}
-      style={{
-        overlay: {
-          background: "rgba(0, 0, 0, 0.7)",
-        },
-      }}
-      contentLabel={alt}
       isOpen={isOpen}
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      onRequestClose={closeModal}
-      ariaHideApp={false}
+      onRequestClose={onClose}
+      className={css.container}
+      overlayClassName={css.overlay}
     >
-      <div className={css.container}>
-        <img src={src} alt={alt} />
+      <div>
+        <img
+          src={image?.urls.full}
+          alt={image?.alt_description || "Image"}
+          className={css.img}
+        />
+        <p>Author: {image?.user.name}</p>
+        <p>Likes: {image?.likes}</p>
+        <button onClick={onClose}>Close</button>
       </div>
     </Modal>
   );
-}
+};
+
+export default ImageModal;

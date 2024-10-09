@@ -1,34 +1,45 @@
-import { Field, Form, Formik } from "formik";
-import toast, { Toaster } from "react-hot-toast";
-import { MdImageSearch } from "react-icons/md";
+import { toast } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
-export default function SearchBar({ submitForm }) {
-  const handleSubmitForm = (values, actions) => {
-    if (values.searchImg.trim() === "") {
-      return toast("What? You must entered text", {
-        icon: "🔎",
-      });
+type SearchBarProps = {
+  onSubmit: (query: string) => void;
+};
+
+export default function SearchBar({ onSubmit }: SearchBarProps) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const input = form.elements.namedItem("query") as HTMLInputElement | null;
+
+    if (!input) {
+      toast.error("Input field not found!");
+      return;
     }
-    submitForm(values.searchImg);
-    actions.resetForm();
+
+    const query = input.value.trim();
+
+    if (!query) {
+      toast.error("Please enter a search term!");
+      return;
+    }
+    onSubmit(query);
   };
+
   return (
-    <>
-      <Formik initialValues={{ searchImg: "" }} onSubmit={handleSubmitForm}>
-        <Form autoComplete="off" className={css.form}>
-          <MdImageSearch className={css.searchIcon} />
-          <Field
-            className={css.formField}
-            type="text"
-            name="searchImg"
-            placeholder=" "
-          />
-        </Form>
-      </Formik>
-      <div>
-        <Toaster position="bottom-center" reverseOrder={false} />
-      </div>
-    </>
+    <header>
+      <form onSubmit={handleSubmit} className={css.form}>
+        <input
+          type="text"
+          name="query"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          className={css.formField}
+        />
+        <button type="submit" className={css.searchIcon}>
+          Search
+        </button>
+      </form>
+    </header>
   );
 }
